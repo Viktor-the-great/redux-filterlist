@@ -317,9 +317,66 @@ reducersForTest.forEach(({
       expect(state[1].additional).toEqual(null);
     });
 
-    test('should load items whits save on load', () => {
+    test('should append items to list when items is loaded (default)', () => {
       let state = reducer({}, registerList(1, {
-        saveItemsWhileLoad: true,
+        appendItems: true,
+      }));
+      state = reducer(state, loadList(1));
+      state = reducer(state, loadListSuccess(1, {
+        items: [{
+          label: 1,
+          value: 1,
+        }, {
+          label: 2,
+          value: 2,
+        }],
+        additional: {
+          count: 2,
+        },
+      }));
+
+      state = reducer(state, loadList(1));
+      state = reducer(state, loadListSuccess(1, {
+        items: [{
+          label: 3,
+          value: 3,
+        }, {
+          label: 4,
+          value: 4,
+        }, {
+          label: 5,
+          value: 5,
+        }],
+        additional: {
+          count: 3,
+        },
+      }));
+
+      expect(state[1].loading).toEqual(false);
+      expect(state[1].items).toEqual([{
+        label: 1,
+        value: 1,
+      }, {
+        label: 2,
+        value: 2,
+      }, {
+        label: 3,
+        value: 3,
+      }, {
+        label: 4,
+        value: 4,
+      }, {
+        label: 5,
+        value: 5,
+      }]);
+      expect(state[1].additional).toEqual({
+        count: 3,
+      });
+    });
+
+    test('should replace items when items is loaded', () => {
+      let state = reducer({}, registerList(1, {
+        appendItems: false,
       }));
       state = reducer(state, loadList(1));
       state = reducer(state, loadListSuccess(1, {
@@ -365,6 +422,64 @@ reducersForTest.forEach(({
       }]);
       expect(state[1].additional).toEqual({
         count: 3,
+      });
+    });
+
+    test('should reset old items before filters is applied', () => {
+      let state = reducer({}, registerList(1, {
+        saveItemsWhileLoad: false,
+      }));
+      state = reducer(state, loadList(1));
+      state = reducer(state, loadListSuccess(1, {
+        items: [{
+          label: 1,
+          value: 1,
+        }, {
+          label: 2,
+          value: 2,
+        }],
+        additional: {
+          count: 2,
+        },
+      }));
+
+      state = reducer(state, setAndApplyFilter(1, 'testFilter', 'testValue'));
+
+      expect(state[1].items).toEqual([]);
+      expect(state[1].additional).toEqual({
+        count: 2,
+      });
+    });
+
+    test('should save old items before filters is applied', () => {
+      let state = reducer({}, registerList(1, {
+        saveItemsWhileLoad: true,
+      }));
+      state = reducer(state, loadList(1));
+      state = reducer(state, loadListSuccess(1, {
+        items: [{
+          label: 1,
+          value: 1,
+        }, {
+          label: 2,
+          value: 2,
+        }],
+        additional: {
+          count: 2,
+        },
+      }));
+
+      state = reducer(state, setAndApplyFilter(1, 'testFilter', 'testValue'));
+
+      expect(state[1].items).toEqual([{
+        label: 1,
+        value: 1,
+      }, {
+        label: 2,
+        value: 2,
+      }]);
+      expect(state[1].additional).toEqual({
+        count: 2,
       });
     });
 

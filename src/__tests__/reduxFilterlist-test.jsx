@@ -252,6 +252,7 @@ test('should provide the correct props', () => {
     .toEqual([
       'additional',
       'alwaysResetFilters',
+      'appendItems',
       'appliedFilters',
       'error',
       'filters',

@@ -10,6 +10,7 @@ const listInitialState = {
   appliedFilters: {},
   saveFiltersOnResetAll: [],
   saveItemsWhileLoad: false,
+  appendItems: true,
   loading: false,
   items: [],
   additional: null,

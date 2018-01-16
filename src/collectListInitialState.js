@@ -26,5 +26,6 @@ export default function collectListInitialState(params) {
       listInitialState.saveFiltersOnResetAll,
     saveItemsWhileLoad: params.saveItemsWhileLoad ||
       listInitialState.saveItemsWhileLoad,
+    appendItems: typeof params.appendItems === 'undefined' ? listInitialState.appendItems : params.appendItems,
   };
 }

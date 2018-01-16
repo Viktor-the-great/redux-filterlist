@@ -111,3 +111,18 @@ test('should no set saveItemsWhileLoad (false by default)', () => {
 
   expect(state.saveItemsWhileLoad).toEqual(false);
 });
+
+test('should set appendItems to specified value', () => {
+  const state = collectListInitialState({
+    appendItems: true,
+  });
+
+  expect(state.appendItems).toEqual(true);
+});
+
+test('should set appendItems to default true value', () => {
+  const state = collectListInitialState({});
+
+  expect(state.appendItems).toEqual(true);
+});
+
