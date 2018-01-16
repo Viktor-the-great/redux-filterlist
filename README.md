@@ -48,7 +48,8 @@ Params:
 | initialFilters | false | Object | filters and their values that sets after filter reset. Should be { filterName1: filterValue, filter2Name: filter2Value, ... } |
 | alwaysResetFilters | false | Object | filters and their values that sets after every filters or sorting change. Should be { filterName1: filterValue, filter2Name: filter2Value, ... } |
 | saveFiltersOnResetAll | false | Array | filters names that not reset after `resetAllFilters` call. Should be [filterName1, filter2Name, ...] |
-| saveItemsWhileLoad | false | Boolean | by default items are cleared if filters or sorting changed. If `saveItemsWhileLoad` is true, previous list items are saved while load request is pending |
+| saveItemsWhileLoad | false | Boolean | by default items are cleared if filters or sorting changed before request. If `saveItemsWhileLoad` is true, previous list items are saved while load request is pending |
+| appendItems | true | Boolean | by default items are appended to list if filters or sorting changed. If `appendItems` is false, list items are replaced by loaded items |
 | onBeforeRequest | false | Function(listState, props) | hook that called before each items request |
 | autoload | false | Boolean | configure initial loading process |
 
